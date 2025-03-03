@@ -11,7 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/toast";
-
+import { LoaderCircle } from "lucide-vue-next";
 import type { FieldConfig } from "~/utils/types/AutoForm";
 
 type TypeCreate = "usuario" | "tipo" | "contato";
@@ -30,12 +30,11 @@ const routesMap: Record<TypeCreate, string> = {
   contato: "/contato",
 };
 
-const runTimeConfig = useRuntimeConfig();
-
 const props = defineProps<Props>();
 const emit = defineEmits(["submit"]);
 
 const isOpen = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
 async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
   let route = routesMap[typeCreate];
@@ -45,17 +44,27 @@ async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
   });
 
   try {
+    isLoading.value = true;
     await execute(body);
     if (!error.value && data.value) {
       toast({
+        variant: "success",
         title: "Sucesso",
         description: "Registro criado com sucesso",
+        duration: 3000,
       });
       isOpen.value = false;
       emit("submit");
     }
   } catch (e) {
+    toast({
+      variant: "destructive",
+      title: "Erro",
+      description: String(e),
+      duration: 3000,
+    });
   } finally {
+    isLoading.value = false;
   }
 }
 </script>
@@ -78,7 +87,10 @@ async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
           @submit="onSubmit(props.typeCreate, $event)"
         >
           <DialogFooter class="mt-6">
-            <Button type="submit"> Salvar </Button>
+            <Button type="submit">
+              <LoaderCircle v-if="isLoading" class="animate-spin" />
+              <p v-else>Salvar</p>
+            </Button>
           </DialogFooter>
         </AutoForm>
       </DialogContent>
