@@ -155,8 +155,8 @@ const columsTable: TableColumnInterface[] = [
                   {{
                     `${
                       row.status === true
-                        ? "Deseja desativar o tipo:"
-                        : "Deseja ativar o tipo:"
+                        ? "Deseja desativar o tipo: "
+                        : "Deseja ativar o tipo: "
                     }`
                   }}{{ row.descricao }}
                 </AlertDialogDescription>

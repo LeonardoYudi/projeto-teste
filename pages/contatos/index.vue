@@ -180,8 +180,8 @@ const columsTable: TableColumnInterface[] = [
                   {{
                     `${
                       row.status === true
-                        ? "Deseja desativar o contato:"
-                        : "Deseja ativar o contato:"
+                        ? "Deseja desativar o contato: "
+                        : "Deseja ativar o contato: "
                     }`
                   }}
                   {{ row.nome }}

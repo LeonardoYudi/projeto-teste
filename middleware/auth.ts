@@ -9,6 +9,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (!authToken && tokenLocalStorage?.token?.access_token) {
     authStore.setToken(tokenLocalStorage.token);
     authToken = authStore.getAccessToken();
+    if (tokenLocalStorage?.email) {
+      authStore.setEmail(tokenLocalStorage.email);
+    }
   }
 
   if (!authToken && to.path !== "/") {

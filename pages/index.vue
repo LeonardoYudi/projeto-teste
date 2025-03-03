@@ -28,7 +28,7 @@ definePageMeta({
     </div>
     <div class="relative hidden bg-muted lg:block">
       <img
-        src="https://images.jota.info/wp-content/uploads/2024/10/whatsapp-image-2024-08-09-at-16-30-46-jpeg.webp"
+        src="@/assets/img/eldorado.webp"
         alt="Image"
         class="absolute w-full h-full inset-0"
       />
