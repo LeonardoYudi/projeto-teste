@@ -15,9 +15,13 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toast";
-
+const routesMap: Record<string, string> = {
+  usuarios: "Usuários",
+  tipos: "Tipos",
+  contatos: "Contato",
+};
 const route = useRoute();
-const routeName = computed(() => route.name);
+const routeName = computed(() => routesMap[route.name as string] || route.name);
 </script>
 
 <template>

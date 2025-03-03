@@ -33,8 +33,6 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 const authStore = useAuthStore();
 const userEmail = computed(() => authStore.getEmail());
 
-
-
 const data = ref({
   user: {
     name: "Eldorado User",
@@ -55,7 +53,7 @@ const data = ref({
       isActive: true,
       items: [
         {
-          title: "Usuarios",
+          title: "Usuários",
           url: "/usuarios",
         },
         {
