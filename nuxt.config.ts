@@ -4,7 +4,14 @@ export default defineNuxtConfig({
   ssr: false,
   app: {
     head: {
-      title: "Eldorado.js",
+      title: "Painel Eldorado",
+      link: [
+        {
+          rel: "icon",
+          type: "image/png",
+          href: "/eld.ico", // Caminho da imagem dentro de `/public`
+        },
+      ],
     },
   },
   devtools: { enabled: true },
