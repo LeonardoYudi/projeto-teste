@@ -28,7 +28,7 @@ import {
 const props = defineProps<{
   user: {
     name: string;
-    email: string;
+    email?: string;
     avatar: string;
   };
 }>();
@@ -48,10 +48,11 @@ const authStore = useAuthStore();
           >
             <Avatar class="h-8 w-8 rounded-lg">
               <AvatarImage :src="user.avatar" :alt="user.name" />
-              <AvatarFallback class="rounded-lg"> CN </AvatarFallback>
+              <AvatarFallback class="rounded-lg"> ED </AvatarFallback>
             </Avatar>
             <div class="grid flex-1 text-left text-sm leading-tight">
               <span class="truncate font-semibold">{{ user.name }}</span>
+
               <span class="truncate text-xs">{{ user.email }}</span>
             </div>
             <ChevronsUpDown class="ml-auto size-4" />
@@ -67,7 +68,7 @@ const authStore = useAuthStore();
             <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar class="h-8 w-8 rounded-lg">
                 <AvatarImage :src="user.avatar" :alt="user.name" />
-                <AvatarFallback class="rounded-lg"> CN </AvatarFallback>
+                <AvatarFallback class="rounded-lg"> ED </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
                 <span class="truncate font-semibold">{{ user.name }}</span>
@@ -76,27 +77,7 @@ const authStore = useAuthStore();
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Sparkles />
-              Premium
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Conta
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Carteira
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell />
-              Notificações
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
+
           <DropdownMenuSeparator />
           <DropdownMenuItem @click="authStore.logout()">
             <LogOut />

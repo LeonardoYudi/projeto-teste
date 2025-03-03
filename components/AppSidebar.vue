@@ -30,18 +30,21 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: "icon",
 });
 
-// This is sample data.
-const data = {
+const authStore = useAuthStore();
+const userEmail = computed(() => authStore.getEmail());
+
+
+
+const data = ref({
   user: {
-    name: "Leonardo Iwama",
-    email: "leonardo.iwama@outlook.com",
+    name: "Eldorado User",
+    email: userEmail.value,
     avatar: "",
   },
   teams: [
     {
       name: "Eldorado Front",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
     },
   ],
   navMain: [
@@ -65,46 +68,8 @@ const data = {
         },
       ],
     },
-    // {
-    //   title: "Tipos",
-    //   url: "#",
-    //   icon: Bot,
-    //   items: [
-    //     {
-    //       title: "Criar",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Ativos",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Inativos",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Contatos",
-    //   url: "#",
-    //   icon: BookOpen,
-    //   items: [
-    //     {
-    //       title: "Criar",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Ativos",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Inativos",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
   ],
-};
+});
 </script>
 
 <template>
