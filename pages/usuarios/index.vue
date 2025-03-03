@@ -11,7 +11,15 @@ import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
 
 const isLoadingTable = ref<boolean>(false);
-const users = ref<any[] | undefined>(undefined);
+
+interface User {
+  id: number;
+  status: boolean;
+  nome: string;
+  email: string;
+}
+
+const users = ref<User[] | undefined>(undefined);
 
 const {
   execute: executeAtivos,

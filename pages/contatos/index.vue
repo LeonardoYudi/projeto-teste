@@ -14,7 +14,14 @@ const { toast } = useToast();
 
 const authStore = useAuthStore();
 
-const tipos = ref<any[] | undefined>(undefined);
+interface Contatos {
+  id: number;
+  nome: string;
+  status: boolean;
+  idusuario: number;
+  idtipo: number;
+  valor: string;
+}
 
 const fields = ref<Record<string, FieldConfig>>({
   idtipo: {
@@ -61,17 +68,17 @@ const {
   route: "/contatos/inaltivos",
 });
 
-const {
-  execute: executeTipoAtivos,
-  data: dataTipoAtivos,
-  error: errorTipoAtivos,
-  loading: loadingTipoAtivos,
-} = useApiAxios({
-  method: "get",
-  route: "/tipos/ativos",
-});
+// const {
+//   execute: executeTipoAtivos,
+//   data: dataTipoAtivos,
+//   error: errorTipoAtivos,
+//   loading: loadingTipoAtivos,
+// } = useApiAxios({
+//   method: "get",
+//   route: "/tipos/ativos",
+// });
 
-const contatos = ref<any[] | undefined>(undefined);
+const contatos = ref<Contatos[] | undefined>(undefined);
 
 const isLoadingTable = ref<boolean>(false);
 
@@ -86,14 +93,9 @@ async function buscarContatos() {
   try {
     await executeAtivos();
     await executeInativos();
-    await executeTipoAtivos();
+
     if (!errorAtivos.value && !errorInativos.value) {
       contatos.value = [...dataAtivos.value, ...dataInativos.value];
-      tipos.value = dataTipoAtivos.value;
-    }
-
-    if (!errorTipoAtivos.value) {
-      tipos.value = dataTipoAtivos.value;
     }
   } catch (e) {
     toast({

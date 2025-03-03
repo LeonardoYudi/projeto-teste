@@ -11,6 +11,12 @@ import type { FieldConfig } from "~/utils/types/AutoForm";
 import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
 
+interface Tipos {
+  id: number;
+  status: boolean;
+  descricao: string;
+}
+
 const fields = ref<Record<string, FieldConfig>>({
   descricao: {
     label: "Descrição",
@@ -21,7 +27,7 @@ onBeforeMount(async () => {
   await buscarTipos();
 });
 
-const tipos = ref<any[] | undefined>(undefined);
+const tipos = ref<Tipos[] | undefined>(undefined);
 const isLoadingTable = ref<boolean>(false);
 
 const columsTable: TableColumnInterface[] = [
