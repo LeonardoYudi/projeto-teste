@@ -45,7 +45,31 @@ async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
 
   try {
     isLoading.value = true;
-    await execute(body);
+
+    if (typeCreate === "contato") {
+      let newBody;
+      if (body?.usuario && body?.tipo) {
+        const usuario = dataAtivos.value.find(
+          (item: any) => item.nome === body?.usuario
+        );
+        const tipo = dataAtivosTiposAtivos.value.find(
+          (item: any) => item.descricao === body?.tipo
+        );
+
+        if (usuario && tipo) {
+          newBody = {
+            nome: body.nome,
+            valor: body.valor,
+            idusuario: usuario.id,
+            idtipo: tipo.id,
+          };
+        }
+        await execute(newBody);
+      }
+    } else {
+      await execute(body);
+    }
+
     if (!error.value && data.value) {
       toast({
         variant: "success",
@@ -55,6 +79,13 @@ async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
       });
       isOpen.value = false;
       emit("submit");
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Erro ao criar registro",
+        duration: 3000,
+      });
     }
   } catch (e) {
     toast({
@@ -67,6 +98,90 @@ async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
     isLoading.value = false;
   }
 }
+
+const {
+  execute: executeAtivos,
+  data: dataAtivos,
+  error: errorAtivos,
+  loading: loadingAtivos,
+} = useApiAxios({
+  method: "get",
+  route: "/usuarios/ativos",
+});
+
+const {
+  execute: executeTiposAtivos,
+  data: dataAtivosTiposAtivos,
+  error: errorAtivosTiposAtivos,
+  loading: loadingAtivosTiposAtivos,
+} = useApiAxios({
+  method: "get",
+  route: "/tipos/ativos",
+});
+
+onBeforeMount(async () => {
+  if (props.typeCreate === "contato") {
+    try {
+      await executeAtivos();
+      await executeTiposAtivos();
+    } catch {
+    } finally {
+    }
+  }
+});
+
+const schema = computed(() => {
+  let updatedSchema = props.schema;
+
+  if (props.typeCreate === "contato") {
+    if (dataAtivos.value) {
+      const enumValuesUsuarios = dataAtivos.value.map((item: any) => item.nome);
+      updatedSchema = updatedSchema.extend({
+        usuario: z.enum(enumValuesUsuarios, {
+          required_error: "Campo obrigatório",
+        }),
+      });
+    }
+
+    if (dataAtivosTiposAtivos.value) {
+      const enumValuesTipos = dataAtivosTiposAtivos.value.map(
+        (item: any) => item.descricao
+      );
+      updatedSchema = updatedSchema.extend({
+        tipo: z.enum(enumValuesTipos, {
+          required_error: "Campo obrigatório",
+        }),
+      });
+    }
+  }
+
+  return updatedSchema;
+});
+
+const fields = computed(() => {
+  let updatedFields = props.fieldConfig;
+
+  if (props.typeCreate === "contato") {
+    updatedFields = {
+      ...updatedFields,
+      valor: {
+        label: "Informação para contato",
+      },
+      usuario: {
+        type: "select",
+        label: "Usuário",
+        options: dataAtivos.value.map((item: any) => item.nome),
+      },
+      tipo: {
+        type: "select",
+        label: "Tipo Contato",
+        options: dataAtivosTiposAtivos.value.map((item: any) => item.descricao),
+      },
+    };
+  }
+
+  return updatedFields;
+});
 </script>
 
 <template>
@@ -82,8 +197,8 @@ async function onSubmit(typeCreate: TypeCreate, body?: Record<string, any>) {
         </DialogHeader>
         <AutoForm
           class="space-2-6"
-          :schema="props.schema"
-          :field-config="props.fieldConfig"
+          :schema="schema"
+          :field-config="fields"
           @submit="onSubmit(props.typeCreate, $event)"
         >
           <DialogFooter class="mt-6">
