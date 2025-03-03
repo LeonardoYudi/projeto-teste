@@ -12,16 +12,17 @@ import type {
   TableColumnInterface,
   TableRowInterface,
 } from "~/types/components/Table";
+import { Skeleton } from "@/components/ui/skeleton";
 interface TabelaGenericaProps {
   title: string;
   tableCaption?: string;
   columns: string[];
   data: any[];
 }
-import { LoaderCircle } from "lucide-vue-next";
+import { LoaderCircle, Database } from "lucide-vue-next";
 const props = defineProps({
   rows: {
-    type: Array as PropType<TableRowInterface[]>,
+    type: (Array as PropType<any[]>) || null,
     default: () => [],
   },
   columns: {
@@ -33,8 +34,14 @@ const props = defineProps({
     default: false,
   },
   loadingState: {
-    // type: Object as PropType<{ icon: HeroIcons; label: string }>,
-    default: () => ({ icon: "ArrowPathIcon", label: "Carregando ..." }),
+    type: Object as PropType<{ label: string }>,
+    default: () => ({ label: "Carregando ..." }),
+  },
+  emptyState: {
+    type: Object as PropType<{ label: string }>,
+    default: () => ({
+      label: "Nenhum registro encontrado",
+    }),
   },
 });
 </script>
@@ -62,6 +69,24 @@ const props = defineProps({
                 <LoaderCircle class="animate-spin" />
                 <span class="mt-2">{{ props.loadingState.label }}</span>
               </div>
+            </TableCell>
+          </TableRow>
+          <TableRow
+            v-if="!props.loading && props.rows && props.rows.length === 0"
+          >
+            <TableCell :colspan="props.columns.length" class="text-center py-4">
+              <div class="flex flex-col items-center justify-center">
+                <Database class="" />
+                <span class="mt-2">{{ props.emptyState.label }}</span>
+              </div>
+            </TableCell>
+          </TableRow>
+          <TableRow v-if="!props.loading && !props.rows">
+            <TableCell
+              :colspan="props.columns.length"
+              class="text-center py-4 space-y-2"
+            >
+              <Skeleton class="w-full h-5 rounded" />
             </TableCell>
           </TableRow>
           <TableRow v-else v-for="row in props.rows" :key="row.id">
