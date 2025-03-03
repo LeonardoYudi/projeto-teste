@@ -1,11 +1,11 @@
-# Guia de Inicialização
+# 🚀 Guia de Inicialização
 
 Este projeto é uma aplicação desenvolvida em Nuxt 3 que oferece uma estrutura moderna e otimizada para desenvolvimento web.
 
 📌 Pré-requisitos
 Antes de começar, certifique-se de ter instalado:
 
-- Node.js (versão 16.10+, utilizei a 22.11.0)
+- Node.js (versão 16.10+, utilizado: 22.11.0).
 - npm ou yarn
 - git
 
@@ -30,12 +30,11 @@ yarn install
 # Envs
 
 ```bash
-NUXT_ENV_API_URL = "" (url da api)
+ # URL da API
+NUXT_ENV_API_URL = "" 
 ```
 
 ## Execute o ambiente de desenvolvimento
-
-Start the development server on `http://localhost:3000`:
 
 ```bash
 # npm
@@ -46,7 +45,9 @@ yarn dev
 
 ```
 
-O projeto estará disponível em http://localhost:3000 caso a porta não esteja em uso.
+O projeto estará disponível em http://localhost:3000 (caso a porta não esteja em uso).
+
+⚡ Não quer rodar localmente? Acesse a versão hospedada: https://projeto-teste-eldorado.vercel.app.
 
 ## 🚀 Tecnologias e Linguagens Utilizadas
 
@@ -55,3 +56,5 @@ O projeto estará disponível em http://localhost:3000 caso a porta não esteja 
 - **Gerenciamento de Estado:** Pinia;
 - **Estilização:** Tailwind CSS, Shadcn/vue;
 - **Controle de Versão:** Git e GitHub;
+
+📌 Desenvolvido por Leonardo Yudi Iwama🚀
