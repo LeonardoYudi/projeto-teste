@@ -4,15 +4,12 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-import { createContatoSchema } from "@/utils/schemas/createContato";
-import type { TableColumnInterface } from "~/types/components/Table";
-import type { FieldConfig } from "~/utils/types/AutoForm";
-import { useToast } from "@/components/ui/toast/use-toast";
-import { z } from "zod";
 import clsx from "clsx";
+import { createContatoSchema } from "@/utils/schemas/createContato";
+import type { FieldConfig } from "~/utils/types/AutoForm";
+import type { TableColumnInterface } from "~/types/components/Table";
+import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
-
-const authStore = useAuthStore();
 
 interface Contatos {
   id: number;
@@ -23,30 +20,8 @@ interface Contatos {
   valor: string;
 }
 
-const fields = ref<Record<string, FieldConfig>>({
-  idtipo: {
-    label: "Id tipo Contato",
-  },
-  idusuario: {
-    label: "Usuário Id",
-  },
-  nome: {
-    label: "Nome",
-  },
-  valor: {
-    label: "Valor",
-  },
-});
-
-const columsTable: TableColumnInterface[] = [
-  { key: "id", label: "Id" },
-  { key: "status", label: "Status" },
-  { key: "nome", label: "Nome" },
-  { key: "idusuario", label: "Usuario Id" },
-  { key: "idtipo", label: "Tipo Id" },
-  { key: "valor", label: "Valor" },
-  { key: "actions", label: "Ações" },
-];
+const isLoadingTable = ref<boolean>(false);
+const contatos = ref<Contatos[] | undefined>(undefined);
 
 const {
   execute: executeAtivos,
@@ -68,23 +43,8 @@ const {
   route: "/contatos/inaltivos",
 });
 
-// const {
-//   execute: executeTipoAtivos,
-//   data: dataTipoAtivos,
-//   error: errorTipoAtivos,
-//   loading: loadingTipoAtivos,
-// } = useApiAxios({
-//   method: "get",
-//   route: "/tipos/ativos",
-// });
-
-const contatos = ref<Contatos[] | undefined>(undefined);
-
-const isLoadingTable = ref<boolean>(false);
-
 onBeforeMount(async () => {
   await buscarContatos();
-  console.log(authStore.getEmail());
 });
 
 async function buscarContatos() {
@@ -143,6 +103,31 @@ async function toggleStatusContatos(id: number) {
   } finally {
   }
 }
+
+const fields = ref<Record<string, FieldConfig>>({
+  idtipo: {
+    label: "Id tipo Contato",
+  },
+  idusuario: {
+    label: "Usuário Id",
+  },
+  nome: {
+    label: "Nome",
+  },
+  valor: {
+    label: "Valor",
+  },
+});
+
+const columsTable: TableColumnInterface[] = [
+  { key: "id", label: "Id" },
+  { key: "status", label: "Status" },
+  { key: "nome", label: "Nome" },
+  { key: "idusuario", label: "Usuario Id" },
+  { key: "idtipo", label: "Tipo Id" },
+  { key: "valor", label: "Valor" },
+  { key: "actions", label: "Ações" },
+];
 </script>
 
 <template>

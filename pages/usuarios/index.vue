@@ -10,8 +10,6 @@ import type { TableColumnInterface } from "~/types/components/Table";
 import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
 
-const isLoadingTable = ref<boolean>(false);
-
 interface User {
   id: number;
   status: boolean;
@@ -19,6 +17,7 @@ interface User {
   email: string;
 }
 
+const isLoadingTable = ref<boolean>(false);
 const users = ref<User[] | undefined>(undefined);
 
 const {

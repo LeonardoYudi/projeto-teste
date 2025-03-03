@@ -6,8 +6,8 @@ definePageMeta({
 
 import clsx from "clsx";
 import { createTipoScheama } from "@/utils/schemas/createTipo";
-import type { TableColumnInterface } from "~/types/components/Table";
 import type { FieldConfig } from "~/utils/types/AutoForm";
+import type { TableColumnInterface } from "~/types/components/Table";
 import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
 
@@ -17,25 +17,8 @@ interface Tipos {
   descricao: string;
 }
 
-const fields = ref<Record<string, FieldConfig>>({
-  descricao: {
-    label: "Descrição",
-  },
-});
-
-onBeforeMount(async () => {
-  await buscarTipos();
-});
-
 const tipos = ref<Tipos[] | undefined>(undefined);
 const isLoadingTable = ref<boolean>(false);
-
-const columsTable: TableColumnInterface[] = [
-  { key: "id", label: "Id" },
-  { key: "status", label: "Status" },
-  { key: "descricao", label: "Descrição" },
-  { key: "actions", label: "Ações" },
-];
 
 const {
   execute: executeAtivos,
@@ -55,6 +38,10 @@ const {
 } = useApiAxios({
   method: "get",
   route: "/tipos/inativos",
+});
+
+onBeforeMount(async () => {
+  await buscarTipos();
 });
 
 async function buscarTipos() {
@@ -105,6 +92,19 @@ async function toggleStatusType(id: number) {
   } finally {
   }
 }
+
+const fields = ref<Record<string, FieldConfig>>({
+  descricao: {
+    label: "Descrição",
+  },
+});
+
+const columsTable: TableColumnInterface[] = [
+  { key: "id", label: "Id" },
+  { key: "status", label: "Status" },
+  { key: "descricao", label: "Descrição" },
+  { key: "actions", label: "Ações" },
+];
 </script>
 
 <template>
