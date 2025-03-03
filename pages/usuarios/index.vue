@@ -3,7 +3,7 @@ definePageMeta({
   layout: "dashboard",
   middleware: ["auth"],
 });
-
+import clsx from "clsx";
 import { createUserScheama } from "@/utils/schemas/createUser";
 import type { FieldConfig } from "~/utils/types/AutoForm";
 import type { TableColumnInterface } from "~/types/components/Table";
@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
 
 const isLoadingTable = ref<boolean>(false);
+const users = ref<any[] | undefined>(undefined);
 
 const {
   execute: executeAtivos,
@@ -40,17 +41,22 @@ async function toggleStatusUser(id: number) {
 
   try {
     await execute();
-    if (!error.value) {
+    if (!error.value && data.value) {
       toast({
         title: "Sucesso",
-        description: "Usuário atualizado com sucesso",
+        description: data.value.message,
         variant: "success",
         duration: 3000,
       });
       await buscarUsuarios();
     }
   } catch (e) {
-    console.log(e);
+    toast({
+      title: "Erro",
+      description: String(e),
+      variant: "destructive",
+      duration: 3000,
+    });
   } finally {
   }
 }
@@ -65,17 +71,21 @@ async function buscarUsuarios() {
       users.value = [...dataAtivos.value, ...dataInativos.value];
     }
   } catch (e) {
-    console.log(e);
+    toast({
+      title: "Erro",
+      description: String(e),
+      variant: "destructive",
+      duration: 3000,
+    });
   } finally {
     isLoadingTable.value = false;
   }
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await buscarUsuarios();
 });
 
-const users = ref<any[]>([]);
 const fields = ref<Record<string, FieldConfig>>({
   username: {
     label: "Nome de usuário",
@@ -99,22 +109,33 @@ const columsTable: TableColumnInterface[] = [
 
 <template>
   <div class="max-h-full w-full overflow-auto">
-    <div class="flex justify-end">
+    <div class="flex">
       <LazyFeaturesModalCreate
         :dialog-title="'Criar Usuário'"
+        :dialog-description="'Preencha os campos para criar um novo usuário'"
         :type-create="'usuario'"
         :schema="createUserScheama"
         :field-config="fields"
+        @submit="buscarUsuarios"
       />
     </div>
     <div class="border rounded-md my-1 shadow-sm">
       <FeaturesTabelaGenerica
         :columns="columsTable"
-        :rows="users || []"
+        :rows="users"
         :loading="isLoadingTable"
       >
         <template #status-cell="{ row }">
-          <p>
+          <p
+            :class="
+              clsx({
+                'text-white bg-green-400 rounded text-center px-1 select-none':
+                  row.status === true,
+                'text-white bg-red-400 rounded text-center px-1 select-none':
+                  row.status === false,
+              })
+            "
+          >
             {{ row.status === true ? "Ativo" : "Inativo" }}
           </p>
         </template>
@@ -133,7 +154,14 @@ const columsTable: TableColumnInterface[] = [
               <AlertDialogHeader>
                 <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Esta ação desativará o usuário {{ row.nome }}
+                  {{
+                    `${
+                      row.status === true
+                        ? "Deseja desativar o usuário:"
+                        : "Deseja ativar o usuário:"
+                    }`
+                  }}
+                  {{ row.nome }}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

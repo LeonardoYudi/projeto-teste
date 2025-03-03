@@ -4,6 +4,7 @@ definePageMeta({
   middleware: ["auth"],
 });
 
+import clsx from "clsx";
 import { createTipoScheama } from "@/utils/schemas/createTipo";
 import type { TableColumnInterface } from "~/types/components/Table";
 import type { FieldConfig } from "~/utils/types/AutoForm";
@@ -16,11 +17,11 @@ const fields = ref<Record<string, FieldConfig>>({
   },
 });
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await buscarTipos();
 });
 
-const users = ref<any[]>([]);
+const tipos = ref<any[] | undefined>(undefined);
 const isLoadingTable = ref<boolean>(false);
 
 const columsTable: TableColumnInterface[] = [
@@ -51,16 +52,21 @@ const {
 });
 
 async function buscarTipos() {
-  users.value = [];
+  tipos.value = [];
   isLoadingTable.value = true;
   try {
     await executeAtivos();
     await executeInativos();
     if (!errorAtivos.value && !errorInativos.value) {
-      users.value = [...dataAtivos.value, ...dataInativos.value];
+      tipos.value = [...dataAtivos.value, ...dataInativos.value];
     }
   } catch (e) {
-    console.log(e);
+    toast({
+      title: "Erro",
+      description: String(e),
+      variant: "destructive",
+      duration: 3000,
+    });
   } finally {
     isLoadingTable.value = false;
   }
@@ -74,40 +80,56 @@ async function toggleStatusType(id: number) {
 
   try {
     await execute();
-    if (!error.value) {
+    if (!error.value && data.value) {
       toast({
         title: "Sucesso",
-        description: "Tipo atualizado com sucesso",
+        description: data.value.message,
         variant: "success",
         duration: 3000,
       });
       await buscarTipos();
     }
   } catch (e) {
-    console.log(e);
+    toast({
+      title: "Erro",
+      description: String(e),
+      variant: "destructive",
+      duration: 3000,
+    });
   } finally {
   }
 }
 </script>
 
 <template>
-  <div>
-    <div class="flex justify-end">
+  <div class="flex flex-col max-w-full">
+    <div class="flex">
       <LazyFeaturesModalCreate
         :dialog-title="'Criar Tipo'"
+        :dialog-description="'Preencha o campo para criar um novo tipo'"
         :type-create="'tipo'"
         :schema="createTipoScheama"
         :field-config="fields"
+        @submit="buscarTipos"
       />
     </div>
-    <div class="border rounded-md my-1 shadow-sm">
+    <div class="border rounded-md my-1 shadow-sm w-full">
       <FeaturesTabelaGenerica
         :columns="columsTable"
-        :rows="users || []"
+        :rows="tipos"
         :loading="isLoadingTable"
       >
         <template #status-cell="{ row }">
-          <p>
+          <p
+            :class="
+              clsx({
+                'text-white bg-green-400 rounded text-center px-1 select-none':
+                  row.status === true,
+                'text-white bg-red-400 rounded text-center px-1 select-none':
+                  row.status === false,
+              })
+            "
+          >
             {{ row.status === true ? "Ativo" : "Inativo" }}
           </p>
         </template>
@@ -120,11 +142,17 @@ async function toggleStatusType(id: number) {
                 }}
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent class="p-4">
               <AlertDialogHeader>
                 <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Esta ação desativará o tipo: {{ row.descricao }}
+                  {{
+                    `${
+                      row.status === true
+                        ? "Deseja desativar o tipo:"
+                        : "Deseja ativar o tipo:"
+                    }`
+                  }}{{ row.descricao }}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
