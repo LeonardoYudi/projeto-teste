@@ -9,7 +9,7 @@ export const createUserScheama = z.object({
       message: "O nome de usuário deve ter pelo menos 2 caracteres.",
     }),
 
-  email: z.string().email({
+  email: z.string({ required_error: "O campo email é obrigatório." }).email({
     message: "Email inválido.",
   }),
 
