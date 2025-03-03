@@ -4,6 +4,11 @@ export default defineNuxtRouteMiddleware(() => {
     const tokenLocalStorage = computed(() =>
       JSON.parse(window?.localStorage?.getItem("token") || "{}")
     );
+
+    if (tokenLocalStorage.value?.email) {
+      authStore.setEmail(tokenLocalStorage.value.email);
+    }
+
     if (tokenLocalStorage.value?.token?.access_token) {
       authStore.setToken(tokenLocalStorage.value.token);
     } else {

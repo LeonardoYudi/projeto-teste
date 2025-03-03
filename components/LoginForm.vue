@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { loginSchema } from "~/utils/schemas/auth";
 import { LoaderCircleIcon } from "lucide-vue-next";
-import auth from "~/middleware/auth";
+
 const { toast } = useToast();
 
 interface formAuth {
@@ -81,15 +81,14 @@ async function handleLogin() {
 
     if (!error.value && data.value) {
       if (data.value) {
-        console.log(data.value);
         authStore.setToken(data.value);
         window?.localStorage.setItem(
           "token",
-          JSON.stringify({ token: data.value })
+          JSON.stringify({ token: data.value, email: formAuth.value.email })
         );
-        console.log(authStore.getAccessToken());
+
+        navigateTo("/usuarios");
       }
-      navigateTo("/dashboard");
     }
   } catch (e) {
     toast({
