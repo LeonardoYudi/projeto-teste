@@ -1,13 +1,13 @@
-# 🌀 Nuxt 3 - Guia de Inicialização 🚀
+# Guia de Inicialização
 
-Este projeto é uma aplicação Nuxt 3 que oferece uma estrutura moderna e otimizada para desenvolvimento web.
+Este projeto é uma aplicação desenvolvida em Nuxt 3 que oferece uma estrutura moderna e otimizada para desenvolvimento web.
 
 📌 Pré-requisitos
 Antes de começar, certifique-se de ter instalado:
 
-Node.js (versão 16.10+, utilizei a 22.11.0)
-npm ou yarn
-git
+- Node.js (versão 16.10+, utilizei a 22.11.0)
+- npm ou yarn
+- git
 
 ## 🛠️ Passos para rodar o projeto
 
@@ -48,7 +48,7 @@ yarn dev
 
 O projeto estará disponível em http://localhost:3000 caso a porta não esteja em uso.
 
-## 🛠️ Tecnologias e Linguagens Utilizadas
+## 🚀 Tecnologias e Linguagens Utilizadas
 
 - **Frontend:** Vue.js, Nuxt, JavaScrip, TypeScript, Zod;
 - **Backend/API:** FastAPI e Axios;
