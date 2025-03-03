@@ -1,26 +1,39 @@
-# Nuxt Minimal Starter
+# 🌀 Nuxt 3 - Guia de Inicialização 🚀
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Este projeto é uma aplicação Nuxt 3 que oferece uma estrutura moderna e otimizada para desenvolvimento web.
 
-## Setup
+📌 Pré-requisitos
+Antes de começar, certifique-se de ter instalado:
 
-Make sure to install dependencies:
+Node.js (versão 16.10+, utilizei a 22.11.0)
+npm ou yarn
+git
+
+## 🛠️ Passos para rodar o projeto
+
+```bash
+
+git clone https://github.com/LeonardoYudi/projeto-teste.git
+cd projeto-teste
+
+```
 
 ```bash
 # npm
 npm install
 
-# pnpm
-pnpm install
-
 # yarn
 yarn install
 
-# bun
-bun install
 ```
 
-## Development Server
+# Envs
+
+```bash
+NUXT_ENV_API_URL = "" (url da api)
+```
+
+## Execute o ambiente de desenvolvimento
 
 Start the development server on `http://localhost:3000`:
 
@@ -28,48 +41,17 @@ Start the development server on `http://localhost:3000`:
 # npm
 npm run dev
 
-# pnpm
-pnpm dev
-
 # yarn
 yarn dev
 
-# bun
-bun run dev
 ```
 
-## Production
+O projeto estará disponível em http://localhost:3000 caso a porta não esteja em uso.
 
-Build the application for production:
+## 🛠️ Tecnologias e Linguagens Utilizadas
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- **Frontend:** Vue.js, Nuxt, JavaScrip, TypeScript, Zod;
+- **Backend/API:** FastAPI e Axios;
+- **Gerenciamento de Estado:** Pinia;
+- **Estilização:** Tailwind CSS, Shadcn/vue;
+- **Controle de Versão:** Git e GitHub;
