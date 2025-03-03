@@ -23,7 +23,6 @@ const props = defineProps<{
   teams: {
     name: string;
     logo: Component;
-    plan: string;
   }[];
 }>();
 
@@ -50,7 +49,6 @@ const activeTeam = ref(props.teams[0]);
               <span class="truncate font-semibold">
                 {{ activeTeam.name }}
               </span>
-              <span class="truncate text-xs">{{ activeTeam.plan }}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </SidebarMenuButton>
