@@ -20,7 +20,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   configAxios.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       config.headers = config.headers || {};
-      console.log("token.value", token.value);
       if (token.value !== "") {
         config.headers.Authorization = `Bearer ${token.value}`;
       }
@@ -35,15 +34,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     (response: AxiosResponse) => {
       return response;
     },
-    (error: AxiosError) => {
+    (error: any) => {
       if (error.status === 401) {
         toast({
-          title: "Error",
+          title: "Erro",
           duration: 3000,
           variant: "destructive",
-          description: String(
-            (error.response?.data as { message: string }).message
-          ),
+          description: "Credenciais inválidas ou token expirado",
         });
 
         storeAuth.logout();
