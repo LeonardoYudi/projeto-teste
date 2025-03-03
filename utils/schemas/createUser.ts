@@ -3,21 +3,21 @@ import { z } from "zod";
 export const createUserScheama = z.object({
   nome: z
     .string({
-      required_error: "Username is required.",
+      required_error: "Nome do usuário é obrigatório.",
     })
     .min(2, {
-      message: "Username must be at least 2 characters.",
+      message: "O nome de usuário deve ter pelo menos 2 caracteres.",
     }),
 
   email: z.string().email({
-    message: "Email inválido",
+    message: "Email inválido.",
   }),
 
   senha: z
     .string({
-      required_error: "Password is required.",
+      required_error: "Senha é obrigatória.",
     })
     .min(8, {
-      message: "Password must be at least 8 characters.",
+      message: "A senha deve ter pelo menos 8 caracteres.",
     }),
 });

@@ -3,9 +3,9 @@ import { z } from "zod";
 export const createTipoScheama = z.object({
   descricao: z
     .string({
-      required_error: "Descricao is required.",
+      required_error: "Descrição do tipo é obrigatória.",
     })
     .min(2, {
-      message: "Descricao must be at least 2 characters.",
+      message: "Descrição do tipo deve ter pelo menos 2 caracteres.",
     }),
 });
