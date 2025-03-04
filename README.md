@@ -51,7 +51,7 @@ O projeto estará disponível em http://localhost:3000 (caso a porta não esteja
 
 ## 🚀 Tecnologias e Linguagens Utilizadas
 
-- **Frontend:** Vue.js, Nuxt, JavaScrip, TypeScript, Zod;
+- **Frontend:** Vue.js, Nuxt, JavaScript, TypeScript, Zod;
 - **Backend/API:** FastAPI e Axios;
 - **Gerenciamento de Estado:** Pinia;
 - **Estilização:** Tailwind CSS, Shadcn/vue;
