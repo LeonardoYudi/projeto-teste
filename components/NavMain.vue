@@ -28,6 +28,8 @@ defineProps<{
     }[];
   }[];
 }>();
+
+const router = useRouter();
 </script>
 
 <template>
@@ -58,7 +60,7 @@ defineProps<{
                 :key="subItem.title"
               >
                 <SidebarMenuSubButton as-child>
-                  <a :href="subItem.url">
+                  <a @click="router.push(subItem.url)">
                     <span>{{ subItem.title }}</span>
                   </a>
                 </SidebarMenuSubButton>

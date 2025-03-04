@@ -149,7 +149,7 @@ const columsTable: TableColumnInterface[] = [
         <template #actions-cell="{ row }">
           <AlertDialog>
             <AlertDialogTrigger as-child>
-              <Button variant="outline">
+              <Button variant="outline" class="w-36 text-start">
                 {{
                   `${
                     row.status === true ? "Desativar Usuário" : "Ativar Usuário"
