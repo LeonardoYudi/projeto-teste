@@ -14,16 +14,9 @@ import {
 } from "@/components/ui/sidebar";
 
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
   SquareTerminal,
+  BrainCircuit,
 } from "lucide-vue-next";
 
 const props = withDefaults(defineProps<SidebarProps>(), {
@@ -41,8 +34,8 @@ const data = ref({
   },
   teams: [
     {
-      name: "Eldorado Front",
-      logo: GalleryVerticalEnd,
+      name: "Dashboard Eldorado AI",
+      logo: BrainCircuit,
     },
   ],
   navMain: [

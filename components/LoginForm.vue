@@ -106,7 +106,7 @@ async function handleLogin() {
 <template>
   <div :class="'flex flex-col gap-6'">
     <div class="flex flex-col items-center gap-2 text-center">
-      <h1 class="text-2xl font-bold">Faça login na sua conta</h1>
+      <h1 class="text-2xl font-bold text-primary">Faça login na sua conta</h1>
       <p class="text-balance text-sm text-muted-foreground">
         Insira seu e-mail abaixo para fazer login na sua conta
       </p>

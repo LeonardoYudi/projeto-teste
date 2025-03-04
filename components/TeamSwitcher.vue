@@ -60,7 +60,7 @@ const activeTeam = ref(props.teams[0]);
           :side-offset="4"
         >
           <DropdownMenuLabel class="text-xs text-muted-foreground">
-            Time
+            Projetos
           </DropdownMenuLabel>
           <DropdownMenuItem
             v-for="(team, index) in teams"
@@ -74,7 +74,6 @@ const activeTeam = ref(props.teams[0]);
               <component :is="team.logo" class="size-4 shrink-0" />
             </div>
             {{ team.name }}
-            <DropdownMenuShortcut>⌘{{ index + 1 }}</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
