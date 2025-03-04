@@ -77,8 +77,6 @@ const authStore = useAuthStore();
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-
-          <DropdownMenuSeparator />
           <DropdownMenuItem @click="authStore.logout()">
             <LogOut />
             Sair
